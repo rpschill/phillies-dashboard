@@ -1,0 +1,137 @@
+@if (game) {
+  <div class="w-128 flex-initial border-1 border-gray-300 rounded-lg p-4 bg-white text-gray-800">
+
+    <!-- 1. meta row -->
+    <div class="flex flex-row items-center justify-between mb-4">
+      @switch (gameStatus) {
+        @case ('Final') {
+          <div class="flex flex-row items-center rounded-full bg-gray-100 text-gray-800 px-3 py-0.5">
+            {{ gameStatus }}
+          </div>
+        }
+        @case ('Live') {
+          <div class="flex flex-row items-center rounded-full bg-red-100 text-red-800 px-3 py-0.5 animate-pulse">
+            <span class="font-bold text-red text-2xl">&middot;</span>
+            <span class="text-red-800 text-sm">{{ game.linescore?.inningState}} {{ game.linescore?.currentInningOrdinal }}</span>
+          </div>
+        }
+        @case ('Preview') {
+          <div class="flex flex-row items-center rounded-full bg-blue-100 text-blue-800 px-3 py-0.5">
+            Upcoming
+          </div>
+        }
+      }
+      <div>
+        {{ game.gameDate | date:'EEE, MMM d' }}
+         &middot;
+        {{ isHome ? 'Home' : 'Away' }}
+      </div>
+    </div>
+
+    <!-- 2. matchup row — always the same -->
+    <div class="flex justify-between mb-4">
+      <div class="flex flex-col justify-start vertical-align-top">
+        <div class="team-name">{{ shortName(game.teams.home.team.name) }}</div>
+        <div class="team-record">
+          {{ game.teams.home.leagueRecord.wins }}-{{ game.teams.home.leagueRecord.losses }}
+        </div>
+      </div>
+      <div class="flex text-6xl font-bold">
+        <!-- 3. center column — changes per status -->
+        @switch (gameStatus) {
+          @case ('Final')   {
+            <!-- final score -->
+            <div class="final-score">
+              {{ game.teams.home.score }} - {{ game.teams.away.score }}
+            </div>
+          }
+          @case ('Live')    {
+            <!-- live score + inning -->
+            <div class="flex flex-col">
+              <div class="flex text-6xl font-bold">
+                {{ game.teams.home.score }} - {{ game.teams.away.score }}
+              </div>
+              <div class="font-normal">
+                {{ game.linescore?.inningState }} {{ game.linescore?.currentInningOrdinal }}
+              </div>
+            </div>
+          }
+          @case ('Preview') {
+            <!-- game time -->
+            <div class="flex flex-col items-center">
+              <div class="text-5xl text-bold">
+                {{ game.gameDate | date:'h:mm' }}
+                <span class="text-base">{{ game.gameDate | date: 'a'}}</span>
+              </div>
+              <div class="text-sm text-gray-500">
+                {{ timezoneAbbr }}
+              </div>
+            </div>
+          }
+        }
+      </div>
+      <div class="flex flex-col justify-start vertical-align-top">
+        <div class="team-name">{{ shortName(game.teams.away.team.name) }}</div>
+        <div class="justify-items-end">{{ game.teams.away.leagueRecord.wins }}-{{ game.teams.away.leagueRecord.losses }}</div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- 4. bottom section — changes per status -->
+    @switch (gameStatus) {
+      @case ('Final')   {
+        <!-- decisions -->
+        <div class="flex flex-col gap-2">
+          <div>W: {{ game.decisions?.winner?.fullName ?? 'N/A' }}</div>
+          <div>L: {{ game.decisions?.loser?.fullName ?? 'N/A' }}</div>
+          @if (game.decisions?.save) {
+            <div>S: {{ game.decisions?.save?.fullName ?? 'N/A' }}</div>
+          }
+        </div>
+      }
+      @case ('Live')    {
+        <!-- linescore -->
+        <div class="flex flex-row">
+          <div class="flex flex-col"></div>
+          <div class="flex flex-col">
+            @for (inning of inningNumbers; track inning) {
+              <div class="text-center text-sm font-medium text-gray-500">{{ inning }}</div>
+            }
+          </div>
+        </div>
+        <div class="flex flex-row">
+          <div class="flex flex-col">
+            <div class="text-sm font-medium text-gray-500">{{ shortName(game.teams.home.team.name) }}</div>
+            @for (inning of inningNumbers; track inning) {
+              <div class="text-center text-lg font-bold">
+                {{ game.linescore?.teams?.home?. ?? '-' }}
+              </div>
+            }
+          </div>
+          <div class="flex flex-col">
+            <div class="text-sm font-medium text-gray-500">{{ shortName(game.teams.away.team.name) }}</div>
+            @for (inning of inningNumbers; track inning) {
+              <div class="text-center text-lg font-bold">
+                {{ game.linescore?.innings[inning - 1]?.away ?? '-' }}
+              </div>
+            }
+          </div>
+
+      }
+      @case ('Preview') {
+        <!-- pitchers + broadcast -->
+        <div class="flex flex-col gap-2">
+          <div>Probable pitchers:</div>
+          <!-- <div>{{ game ?? 'N/A' }} vs {{ game.probablePitchers?.away?.fullName ?? 'N/A' }}</div>
+          @if (game.broadcasts?.length) {
+            <div>Broadcast: {{ game.broadcasts[0].name }}</div>
+          } -->
+        </div>
+      }
+    }
+
+  </div>
+} @else {
+  <div class="game-card game-card--empty">No game data</div>
+}
