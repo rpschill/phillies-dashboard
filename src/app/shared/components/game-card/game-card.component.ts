@@ -1,7 +1,7 @@
-import { Component, Input, computed } from '@angular/core';
+import { Component, Input, computed, inject } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { Game } from '../../models/mlb.models';
-import { PHILLIES_ID } from '../../../core/services/mlb.service';
+import { MlbService, PHILLIES_ID } from '../../../core/services/mlb.service';
 import { shortTeamName } from '../../utils/game.utils';
 
 @Component({
@@ -13,6 +13,8 @@ import { shortTeamName } from '../../utils/game.utils';
 export class GameCardComponent {
   @Input() game: Game | null = null;
   @Input() variant: 'previous' | 'current' = 'previous';
+
+  mlbService = inject(MlbService);
 
   readonly philliesId = PHILLIES_ID;
   readonly inningNumbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
@@ -46,6 +48,14 @@ export class GameCardComponent {
       weekday: 'short',
       month: 'long',
       day: 'numeric',
+    });
+  }
+
+  getLinescoreForTeam(team: 'home' | 'away'): (string | number)[] {
+    if (!this.game?.linescore?.innings) return [];
+    return this.game.linescore.innings.map(inning => {
+      const runs = team === 'home' ? inning.home?.runs : inning.away?.runs;
+      return runs ?? '-';
     });
   }
 

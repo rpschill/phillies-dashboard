@@ -51,7 +51,7 @@
               <div class="flex text-6xl font-bold">
                 {{ game.teams.home.score }} - {{ game.teams.away.score }}
               </div>
-              <div class="font-normal">
+              <div class="text-sm">
                 {{ game.linescore?.inningState }} {{ game.linescore?.currentInningOrdinal }}
               </div>
             </div>
@@ -93,31 +93,31 @@
       @case ('Live')    {
         <!-- linescore -->
         <div class="flex flex-row">
-          <div class="flex flex-col"></div>
-          <div class="flex flex-col">
+          <div class="flex flex-row flex-end"></div>
+          <div class="flex flex-row gap-2">
             @for (inning of inningNumbers; track inning) {
               <div class="text-center text-sm font-medium text-gray-500">{{ inning }}</div>
             }
           </div>
         </div>
-        <div class="flex flex-row">
-          <div class="flex flex-col">
+        <div class="flex flex-col">
+          <div class="flex flex-row gap-2">
             <div class="text-sm font-medium text-gray-500">{{ shortName(game.teams.home.team.name) }}</div>
-            @for (inning of inningNumbers; track inning) {
+            @for (inning of getLinescoreForTeam('home'); track inning) {
               <div class="text-center text-lg font-bold">
-                {{ game.linescore?.teams?.home?. ?? '-' }}
+                {{ inning ?? '-' }}
               </div>
             }
           </div>
-          <div class="flex flex-col">
+          <div class="flex flex-row gap-2">
             <div class="text-sm font-medium text-gray-500">{{ shortName(game.teams.away.team.name) }}</div>
-            @for (inning of inningNumbers; track inning) {
+            @for (inning of getLinescoreForTeam('away'); track inning) {
               <div class="text-center text-lg font-bold">
-                {{ game.linescore?.innings[inning - 1]?.away ?? '-' }}
+                {{ inning ?? '-' }}
               </div>
             }
           </div>
-
+        </div>
       }
       @case ('Preview') {
         <!-- pitchers + broadcast -->
