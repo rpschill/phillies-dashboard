@@ -1,14 +1,53 @@
 /* You can add global styles to this file, and also import other style files */
 @import "tailwindcss";
 
-// * {
-//   box-sizing: border-box;
-//   margin: 0;
-//   padding: 0;
-// }
+@layer base {
+  * {
+    font-family: 'Inter', sans-serif;
+  }
+}
 
-// body {
-//   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-//   background: $bg-page;
-//   color: $text-primary;
-// }
+@utility text-primary {
+  color: var(--color-text-primary);
+}
+
+@utility text-secondary {
+  color: var(--color-text-secondary);
+}
+
+@utility text-muted {
+  color: var(--color-text-muted);
+}
+
+@utility bg-chip {
+  background-color: var(--color-bg-chip);
+}
+
+@utility text-muted {
+  color: var(--color-text-muted);
+}
+
+@utility phillies-navy {
+  color: var(--color-phillies-navy);
+}
+
+@utility phillies-red {
+  color: var(--color-phillies-red);
+}
+
+@theme {
+  --color-phillies-red: #E81828;
+  --color-phillies-navy: #002D72;
+
+  --color-bg-page: #f7f6f3;
+  --color-bg-card: #fff;
+  --color-bg-chip: #f3f2ee;
+
+  --color-border-card: #e4e2dc;
+  --color-border-divider: #eee;
+
+  --color-text-primary: #1a1a1a;
+  --color-text-secondary: #888;
+  --color-text-muted: #aaa;
+}
+

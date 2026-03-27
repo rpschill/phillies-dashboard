@@ -1,12 +1,12 @@
-<div class="flex flex-col items-center gap-4 py-8 flex-initial">
+<div class="flex flex-col gap-8">
   <div class="flex flex-row justify-around flex-initial">
     <div>
-      <div class="section-label">Previous game</div>
+      <div class="text-secondary font-bold">PREVIOUS GAME</div>
       <app-game-card variant="previous" [game]="homePageGames()?.lastCompletedGame ?? null" />
     </div>
     <div>
-      <div class="section-label">
-        {{ homePageGames()?.currentOrNextGame?.status?.abstractGameState === 'Live' ? 'Current game' : 'Next game' }}
+      <div class="text-secondary font-bold">
+        {{ homePageGames()?.currentOrNextGame?.status?.abstractGameState === 'Live' ? 'CURRENT GAME' : 'NEXT GAME' }}
       </div>
       <app-game-card variant="current" [game]="homePageGames()?.currentOrNextGame ?? null" />
     </div>

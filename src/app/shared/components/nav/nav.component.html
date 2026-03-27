@@ -1,8 +1,10 @@
-<header>
-  <nav>
-    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
-    <a routerLink="/players" routerLinkActive="active">Players</a>
-    <a routerLink="/standings" routerLinkActive="active">Standings</a>
-    <a routerLink="/schedule" routerLinkActive="active">Schedule</a>
+<header class="bg-phillies-navy text-white font-bold text-lg p-4 mb-10">
+  <nav class="flex items-center font-bold">
+    <span class="ml-4 mr-2 text-5xl text-phillies-red">&middot;</span>
+    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="mr-auto text-2xl">Phillies</a>
+    <a class="mx-4" routerLink="/home" routerLinkActive="active">Home</a>
+    <a class="mx-4" routerLink="/players" routerLinkActive="active">Players</a>
+    <a class="mx-4" routerLink="/standings" routerLinkActive="active">Standings</a>
+    <a class="mx-4" routerLink="/schedule" routerLinkActive="active">Schedule</a>
   </nav>
 </header>

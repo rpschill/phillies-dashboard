@@ -26,6 +26,8 @@ export interface Game {
   teams: { home: GameTeamData; away: GameTeamData };
   linescore?: Linescore;
   decisions?: { winner?: Pitcher; loser?: Pitcher; save?: Pitcher };
+  probablePitchers?: { home?: Pitcher; away?: Pitcher };
+  broadcasts?: { name: string; type: string }[];
 }
 
 export interface Linescore {

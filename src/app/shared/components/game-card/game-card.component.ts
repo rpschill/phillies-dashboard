@@ -1,6 +1,6 @@
-import { Component, Input, computed, inject } from '@angular/core';
+import { Component, Input, OnChanges, inject } from '@angular/core';
 import { DatePipe } from '@angular/common';
-import { Game } from '../../models/mlb.models';
+import { Game, PitchingStats } from '../../models/mlb.models';
 import { MlbService, PHILLIES_ID } from '../../../core/services/mlb.service';
 import { shortTeamName } from '../../utils/game.utils';
 
@@ -10,8 +10,28 @@ import { shortTeamName } from '../../utils/game.utils';
   templateUrl: './game-card.component.html',
   styleUrl: './game-card.component.scss'
 })
-export class GameCardComponent {
+export class GameCardComponent implements OnChanges {
   @Input() game: Game | null = null;
+
+  homePitcherStats?: PitchingStats;
+  awayPitcherStats?: PitchingStats;
+
+  ngOnChanges(): void {
+    this.homePitcherStats = undefined;
+    this.awayPitcherStats = undefined;
+    const homeId = this.game?.probablePitchers?.home?.id;
+    const awayId = this.game?.probablePitchers?.away?.id;
+    if (homeId) {
+      this.mlbService.getPlayerStats(homeId, 'pitching').subscribe(res => {
+        this.homePitcherStats = res.stats[0]?.splits[0]?.stat as PitchingStats;
+      });
+    }
+    if (awayId) {
+      this.mlbService.getPlayerStats(awayId, 'pitching').subscribe(res => {
+        this.awayPitcherStats = res.stats[0]?.splits[0]?.stat as PitchingStats;
+      });
+    }
+  }
   @Input() variant: 'previous' | 'current' = 'previous';
 
   mlbService = inject(MlbService);
@@ -37,6 +57,10 @@ export class GameCardComponent {
 
   get opponentScore(): number | undefined {
     return this.opponentTeam?.score;
+  }
+
+  get philliesWon(): boolean {
+    return this.philliesTeam?.isWinner === true;
   }
 
   get gameStatus(): string {
