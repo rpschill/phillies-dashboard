@@ -19,6 +19,10 @@
   color: var(--color-text-muted);
 }
 
+@utility bg-page {
+  background-color: var(--color-bg-page);
+}
+
 @utility bg-chip {
   background-color: var(--color-bg-chip);
 }
