@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "phillies-dashboard-ng": {
+    "phillies-dashboard": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/phillies-dashboard-ng",
+            "outputPath": "dist/phillies-dashboard",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -64,10 +64,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "phillies-dashboard-ng:build:production"
+              "buildTarget": "phillies-dashboard:build:production"
             },
             "development": {
-              "buildTarget": "phillies-dashboard-ng:build:development"
+              "buildTarget": "phillies-dashboard:build:development"
             }
           },
           "defaultConfiguration": "development"

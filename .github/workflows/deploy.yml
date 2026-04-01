@@ -30,7 +30,7 @@ jobs:
       - run: npm run build -- --base-href /phillies-dashboard/
 
       # Copy index.html to 404.html so Angular routing works on direct URL loads
-      - run: cp dist/phillies-dashboard-ng/browser/index.html dist/phillies-dashboard/browser/404.html
+      - run: cp dist/phillies-dashboard/browser/index.html dist/phillies-dashboard/browser/404.html
 
       - uses: actions/upload-pages-artifact@v3
         with:
