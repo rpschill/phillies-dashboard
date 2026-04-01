@@ -6,3 +6,10 @@
 //   border-radius: $card-radius;
 //   padding: $card-padding;
 // }
+
+.linescore-grid {
+  display: grid;
+  grid-template-columns: 2.5rem repeat(9, 1fr);
+  row-gap: 0.3rem;
+  align-items: center;
+}

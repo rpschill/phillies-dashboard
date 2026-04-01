@@ -83,6 +83,18 @@ export class GameCardComponent implements OnChanges {
     });
   }
 
+  getInningScoreByNum(team: 'home' | 'away', inningNum: number): string | number {
+    if (!this.game?.linescore?.innings) return '–';
+    const inning = this.game.linescore.innings.find(i => i.num === inningNum);
+    if (!inning) return '–';
+    const runs = team === 'home' ? inning.home?.runs : inning.away?.runs;
+    return runs !== undefined ? runs : '–';
+  }
+
+  isCurrentInning(inningNum: number): boolean {
+    return this.game?.linescore?.currentInning === inningNum;
+  }
+
   shortName = shortTeamName;
 
   get timezoneAbbr(): string {
