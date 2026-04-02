@@ -9,5 +9,5 @@ import { NavComponent } from './shared/components/nav/nav.component';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-
+  currentYear = new Date().getFullYear();
 }
