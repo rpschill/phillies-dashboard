@@ -1,12 +1,5 @@
 @use '../../../../styles/variables' as *;
 
-// .game-card {
-//   background-color: $bg-card;
-//   border: 1px solid $border-card;
-//   border-radius: $card-radius;
-//   padding: $card-padding;
-// }
-
 .linescore-grid {
   display: grid;
   grid-template-columns: 2.5rem repeat(9, 1fr);

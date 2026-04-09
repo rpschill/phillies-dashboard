@@ -3,9 +3,30 @@
 
 @layer base {
   * {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Outfit', sans-serif;
+  }
+  body {
+    color: var(--color-text-primary);
+    font-size: 0.9375rem; /* 15px base — up from 13px */
+    line-height: 1.5;
   }
 }
+
+/* ─── Typography utilities ────────────────────────────────────────── */
+
+@utility font-display {
+  font-family: var(--font-display);
+}
+
+@utility font-ui {
+  font-family: var(--font-ui);
+}
+
+@utility nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ─── Semantic text utilities ─────────────────────────────────────── */
 
 @utility text-primary {
   color: var(--color-text-primary);
@@ -19,39 +40,146 @@
   color: var(--color-text-muted);
 }
 
+@utility text-link {
+  color: var(--color-link);
+}
+
+@utility text-brand-accent {
+  color: var(--color-brand-accent);
+}
+
+/* ─── Surface utilities ───────────────────────────────────────────── */
+
 @utility bg-page {
   background-color: var(--color-bg-page);
+}
+
+@utility bg-card {
+  background-color: var(--color-bg-card);
 }
 
 @utility bg-chip {
   background-color: var(--color-bg-chip);
 }
 
-@utility text-muted {
-  color: var(--color-text-muted);
+/* ─── Border utilities ────────────────────────────────────────────── */
+
+@utility border-card {
+  border-color: var(--color-border-card);
 }
 
-@utility phillies-navy {
-  color: var(--color-phillies-navy);
+@utility border-divider {
+  border-color: var(--color-border-divider);
 }
 
-@utility phillies-red {
-  color: var(--color-phillies-red);
+/* ─── Status badge utilities ──────────────────────────────────────── */
+
+@utility status-live {
+  background-color: var(--color-status-live-bg);
+  color: var(--color-status-live-text);
 }
+
+@utility status-preview {
+  background-color: var(--color-status-preview-bg);
+  color: var(--color-status-preview-text);
+}
+
+@utility status-final {
+  background-color: var(--color-status-final-bg);
+  color: var(--color-status-final-text);
+}
+
+/* ─── Design tokens: light mode (default) ────────────────────────── */
 
 @theme {
+  /* Typography */
+  --font-display: 'Barlow Condensed', sans-serif;
+  --font-ui: 'Outfit', sans-serif;
+
+  /* Brand — fixed, mode-independent */
   --color-phillies-red: #E81828;
   --color-phillies-navy: #002D72;
 
+  /* Surfaces */
   --color-bg-page: #f7f6f3;
-  --color-bg-card: #fff;
+  --color-bg-card: #ffffff;
   --color-bg-chip: #f3f2ee;
 
+  /* Borders */
   --color-border-card: #e4e2dc;
-  --color-border-divider: #eee;
+  --color-border-divider: #e8e5df;
 
+  /* Text
+     — Contrast ratios on white card (#fff):
+       primary   #1a1a1a → 16.7:1  ✓ AAA
+       secondary #666666 →  5.2:1  ✓ AA
+       muted     #767676 →  4.5:1  ✓ AA (used inside white cards only)
+  */
   --color-text-primary: #1a1a1a;
-  --color-text-secondary: #888;
-  --color-text-muted: #aaa;
+  --color-text-secondary: #666666;
+  --color-text-muted: #767676;
+
+  /* Semantic: link */
+  --color-link: #b91c1c;
+
+  /* Semantic: brand accent text (team names, winning scores)
+     Navy in light mode; light blue in dark — prevents navy-on-navy invisibility */
+  --color-brand-accent: #002D72;
+
+  /* Status: Live */
+  --color-status-live-bg: #fee2e2;
+  --color-status-live-text: #991b1b;
+
+  /* Status: Upcoming */
+  --color-status-preview-bg: #e0eaff;
+  --color-status-preview-text: #1e3a8a;
+
+  /* Status: Final */
+  --color-status-final-bg: #f3f2ee;
+  --color-status-final-text: #666666;
 }
 
+/* ─── Design tokens: dark mode ────────────────────────────────────── */
+/* "Stadium lights at night" — deep navy, not black */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Surfaces */
+    --color-bg-page: #0d1c2e;
+    --color-bg-card: #162033;
+    --color-bg-chip: #1e2d42;
+
+    /* Borders */
+    --color-border-card: #2a3f5f;
+    --color-border-divider: #1e2d42;
+
+    /* Text
+       — Contrast ratios on dark card (#162033):
+         primary   #f0ede6 → 14.4:1  ✓ AAA
+         secondary #a8bfd6 →  9.0:1  ✓ AAA
+         muted     #7a96ae →  5.4:1  ✓ AA
+    */
+    --color-text-primary: #f0ede6;
+    --color-text-secondary: #a8bfd6;
+    --color-text-muted: #7a96ae;
+
+    /* Semantic: link — light warm red on dark navy (9.5:1) */
+    --color-link: #fca5a5;
+
+    /* Semantic: brand accent — light Phillies-adjacent blue (7.8:1 on dark card)
+       Reads as "Phillies branded blue sky" in dark mode */
+    --color-brand-accent: #93b4e8;
+
+    /* Status: Live — dark red bg, light red text (9.5:1) */
+    --color-status-live-bg: #2a1014;
+    --color-status-live-text: #fca5a5;
+
+    /* Status: Upcoming — dark navy bg, light blue text (7.8:1) */
+    --color-status-preview-bg: #0d1f3c;
+    --color-status-preview-text: #93b4e8;
+
+    /* Status: Final — dark chip bg, secondary text (9.0:1) */
+    --color-status-final-bg: #1e2d42;
+    --color-status-final-text: #a8bfd6;
+  }
+}
