@@ -6,9 +6,24 @@
     font-family: 'Outfit', sans-serif;
   }
   body {
+    background-color: var(--color-bg-page);
     color: var(--color-text-primary);
     font-size: 0.9375rem; /* 15px base — up from 13px */
     line-height: 1.5;
+  }
+
+  /* Film grain overlay — analog warmth, like a stadium program or ticket stub.
+     mix-blend-mode: overlay means grain works in both light and dark modes. */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0.04;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 300px 300px;
   }
 }
 

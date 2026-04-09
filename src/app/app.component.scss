@@ -1,1 +1,6 @@
-@use '../styles/variables' as *;
+/* App shell — flex column so footer sticks to bottom of viewport */
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}

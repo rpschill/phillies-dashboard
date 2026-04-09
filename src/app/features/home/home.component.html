@@ -1,15 +1,17 @@
 <h1 class="sr-only">Phillies Dashboard</h1>
-<div class="flex flex-col gap-8">
-  <div class="flex flex-col-reverse gap-6 md:flex-row md:justify-around md:gap-0">
-    <div class="flex flex-col gap-2">
-      <h2 class="font-display font-semibold tracking-wider text-xs text-secondary">Previous Game</h2>
-      <app-game-card variant="previous" [game]="homePageGames()?.lastCompletedGame ?? null" />
-    </div>
-    <div class="flex flex-col gap-2">
-      <h2 class="font-display font-semibold tracking-wider text-xs text-secondary">
-        {{ homePageGames()?.currentOrNextGame?.status?.abstractGameState === 'Live' ? 'Current Game' : 'Next Game' }}
-      </h2>
-      <app-game-card variant="current" [game]="homePageGames()?.currentOrNextGame ?? null" />
-    </div>
+<div class="flex flex-col-reverse gap-8 md:flex-row md:justify-center md:gap-10">
+  <div class="flex flex-col gap-3 game-section">
+    <h2 class="font-display font-semibold tracking-widest text-xs text-secondary uppercase flex items-center gap-1.5">
+      <span class="text-phillies-red text-base leading-none" aria-hidden="true">&middot;</span>
+      Previous Game
+    </h2>
+    <app-game-card variant="previous" [game]="homePageGames()?.lastCompletedGame ?? null" />
+  </div>
+  <div class="flex flex-col gap-3 game-section">
+    <h2 class="font-display font-semibold tracking-widest text-xs text-secondary uppercase flex items-center gap-1.5">
+      <span class="text-phillies-red text-base leading-none" aria-hidden="true">&middot;</span>
+      {{ homePageGames()?.currentOrNextGame?.status?.abstractGameState === 'Live' ? 'Current Game' : 'Next Game' }}
+    </h2>
+    <app-game-card variant="current" [game]="homePageGames()?.currentOrNextGame ?? null" />
   </div>
 </div>

@@ -1,27 +1,29 @@
 @if (game) {
   <article
-    class="w-full md:w-128 flex-initial border-1 border-card rounded-lg p-4 bg-card text-primary"
+    class="w-full md:w-128 flex-initial border-1 border-card rounded-lg p-5 bg-card text-primary"
     [attr.aria-label]="shortName(game.teams.away.team.name) + ' at ' + shortName(game.teams.home.team.name)">
 
     <!-- 1. meta row -->
-    <div class="flex flex-row items-center justify-between mb-4">
+    <div class="flex flex-row items-center justify-between mb-5">
       @switch (gameStatus) {
         @case ('Final') {
-          <div class="flex flex-row items-center rounded-full status-final font-display font-semibold tracking-wider px-3 py-0.5 text-sm">
+          <div class="flex items-center rounded-full status-final font-display font-semibold tracking-wider px-3 py-0.5 text-sm">
             {{ gameStatus }}
           </div>
         }
         @case ('Live') {
           <div
             role="status"
-            aria-label="Game in progress"
-            class="flex flex-row items-center rounded-full status-live font-display font-semibold tracking-wider px-3 py-0.5 text-sm motion-safe:animate-pulse">
-            <span class="text-phillies-red text-2xl leading-none mr-1" aria-hidden="true">&middot;</span>
+            class="flex items-center rounded-full status-live font-display font-semibold tracking-wider px-3 py-0.5 text-sm">
+            <span class="relative flex items-center justify-center w-3 h-3 mr-2 shrink-0" aria-hidden="true">
+              <span class="motion-safe:animate-ping absolute inline-flex w-full h-full rounded-full bg-phillies-red opacity-60"></span>
+              <span class="relative inline-flex rounded-full w-2 h-2 bg-phillies-red"></span>
+            </span>
             <span>{{ game.linescore?.inningState}} {{ game.linescore?.currentInningOrdinal }}</span>
           </div>
         }
         @case ('Preview') {
-          <div class="flex flex-row items-center rounded-full status-preview font-display font-semibold tracking-wider px-3 py-0.5 text-sm">
+          <div class="flex items-center rounded-full status-preview font-display font-semibold tracking-wider px-3 py-0.5 text-sm">
             Upcoming
           </div>
         }
@@ -34,14 +36,14 @@
     </div>
 
     <!-- 2. matchup row — always the same -->
-    <div class="flex justify-between mb-4">
+    <div class="flex justify-between mb-6">
       <div class="flex flex-col justify-start min-w-0">
         <div class="text-xl font-semibold truncate" [class.text-brand-accent]="isHome">{{ shortName(game.teams.home.team.name) }}</div>
         <div class="text-secondary text-sm font-medium">
           {{ game.teams.home.leagueRecord.wins }}-{{ game.teams.home.leagueRecord.losses }}
         </div>
       </div>
-      <div class="flex shrink-0 mx-2">
+      <div class="flex shrink-0 mx-4 items-center bg-chip rounded-lg px-4 py-2">
         <!-- 3. center column — changes per status -->
         @switch (gameStatus) {
           @case ('Final')   {
@@ -140,28 +142,29 @@
       }
       @case ('Preview') {
         <!-- pitchers -->
-        <div class="flex flex-row gap-1 justify-between text-sm">
-          <div class="flex flex-col justify-between gap-1 min-w-0">
-            <div class="font-display font-semibold tracking-wider text-xs text-secondary">PROBABLE</div>
-            @if (game.probablePitchers && game.probablePitchers.home) {
-              <span class="truncate">{{ game.probablePitchers.home.fullName }}</span>
-              @if (homePitcherStats) {
-                <span class="text-secondary">{{ homePitcherStats.wins }}-{{ homePitcherStats.losses }}, {{ homePitcherStats.era }} ERA</span>
+        <div class="flex flex-col gap-2 text-sm">
+          <div class="font-display font-semibold tracking-wider text-xs text-secondary text-center">Probable Pitchers</div>
+          <div class="flex flex-row gap-4 justify-between">
+            <div class="flex flex-col gap-1 min-w-0">
+              @if (game.probablePitchers && game.probablePitchers.home) {
+                <span class="truncate">{{ game.probablePitchers.home.fullName }}</span>
+                @if (homePitcherStats) {
+                  <span class="text-secondary">{{ homePitcherStats.wins }}-{{ homePitcherStats.losses }}, {{ homePitcherStats.era }} ERA</span>
+                }
+              } @else {
+                <span class="font-semibold">TBD</span>
               }
-            } @else {
-              <span class="font-semibold">TBD</span>
-            }
-          </div>
-          <div class="flex flex-col justify-between gap-1 text-end min-w-0">
-            <div class="font-display font-semibold tracking-wider text-xs text-secondary">PROBABLE</div>
-            @if (game.probablePitchers && game.probablePitchers.away) {
-              <span class="truncate">{{ game.probablePitchers.away.fullName }}</span>
-              @if (awayPitcherStats) {
-                <span class="text-secondary">{{ awayPitcherStats.wins }}-{{ awayPitcherStats.losses }}, {{ awayPitcherStats.era }} ERA</span>
+            </div>
+            <div class="flex flex-col gap-1 text-end min-w-0">
+              @if (game.probablePitchers && game.probablePitchers.away) {
+                <span class="truncate">{{ game.probablePitchers.away.fullName }}</span>
+                @if (awayPitcherStats) {
+                  <span class="text-secondary">{{ awayPitcherStats.wins }}-{{ awayPitcherStats.losses }}, {{ awayPitcherStats.era }} ERA</span>
+                }
+              } @else {
+                <span class="font-semibold">TBD</span>
               }
-            } @else {
-              <span class="font-semibold">TBD</span>
-            }
+            </div>
           </div>
         </div>
 
@@ -170,7 +173,7 @@
           <hr class="border-divider my-4">
 
           <div class="flex flex-col gap-1 text-sm">
-            <div class="font-display font-semibold tracking-wider text-xs text-secondary">Watch / Listen</div>
+            <div class="font-display font-semibold tracking-wider text-xs text-secondary text-center">On Air</div>
             <div class="flex flex-wrap gap-2">
               @for (broadcast of game.broadcasts!; track broadcast.name) {
                 <span class="rounded-full bg-chip text-secondary px-2 py-0.5">{{ broadcast.name }}</span>
@@ -183,5 +186,5 @@
 
   </article>
 } @else {
-  <div class="text-secondary text-sm">No game data</div>
+  <div class="text-secondary text-sm">{{ variant === 'previous' ? 'No recent game' : 'No upcoming game' }}</div>
 }
