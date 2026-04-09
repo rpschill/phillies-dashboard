@@ -1,0 +1,19 @@
+.nav-link {
+  display: block;
+  padding: 0.375rem 0.625rem;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.6);
+  transition: color 0.15s ease, background-color 0.15s ease;
+
+  &:hover {
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+
+  &.nav-active {
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.15);
+  }
+}

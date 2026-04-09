@@ -8,16 +8,21 @@ $bg-card: #fff;
 $bg-chip: #f3f2ee;
 
 $border-card: #e4e2dc;
-$border-divider: #eee;
+$border-divider: #e8e5df;
 
-$text-primary: #1a1a1a;
-$text-secondary: #888;
-$text-muted: #aaa;
+// Text — all values pass WCAG AA on white (#fff)
+$text-primary: #1a1a1a;   // 16.7:1
+$text-secondary: #666666;  // 5.2:1  (was #888, 3.5:1 — WCAG AA fail fixed)
+$text-muted: #767676;      // 4.5:1  (was #aaa, 2.3:1 — WCAG AA fail fixed)
+
+// Fonts
+$font-display: 'Barlow Condensed', sans-serif;
+$font-ui: 'Outfit', sans-serif;
 
 // Typography
-$font-size-label: 11px;
-$font-size-body: 13px;
-$font-size-score: 28px;
+$font-size-label: 12px;
+$font-size-body: 15px;
+$font-size-score: 60px; /* text-6xl */
 
 // Spacing
 $card-padding: 20px;
