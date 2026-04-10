@@ -19,10 +19,20 @@ export class MlbService {
     );
   }
 
+  private localDateStr(date: Date): string {
+    const y = date.getFullYear();
+    const m = String(date.getMonth() + 1).padStart(2, '0');
+    const d = String(date.getDate()).padStart(2, '0');
+    return `${y}-${m}-${d}`;
+  }
+
   getTodaySchedule(): Observable<{ dates: { games: Game[] }[] }> {
+    const today = this.localDateStr(new Date());
     const params = new HttpParams({ fromObject: {
       sportId: '1',
       teamId: PHILLIES_ID.toString(),
+      startDate: today,
+      endDate: today,
       hydrate: 'linescore,decisions,team'
     } });
 
@@ -38,8 +48,8 @@ export class MlbService {
     const params = new HttpParams({ fromObject: {
       sportId: '1',
       teamId: PHILLIES_ID.toString(),
-      startDate: tomorrow.toISOString().split('T')[0],
-      endDate: endDate.toISOString().split('T')[0],
+      startDate: this.localDateStr(tomorrow),
+      endDate: this.localDateStr(endDate),
       hydrate: 'linescore,decisions,team,probablePitcher,broadcasts'
     } });
     return this.fetchMlb('/schedule', params);
@@ -54,8 +64,8 @@ export class MlbService {
     const params = new HttpParams({ fromObject: {
       sportId: '1',
       teamId: PHILLIES_ID.toString(),
-      startDate: past.toISOString().split('T')[0],
-      endDate: yesterday.toISOString().split('T')[0],
+      startDate: this.localDateStr(past),
+      endDate: this.localDateStr(yesterday),
       hydrate: 'linescore,decisions,team'
     } });
     return this.fetchMlb('/schedule', params);
